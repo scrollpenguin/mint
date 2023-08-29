@@ -159,6 +159,7 @@ export default function Home() {
 
     let max;
     if (maxAvailable.lt(bnMaxClaimable) && !isOpenEdition) {
+      max = maxAvailable;
     } else {
       max = bnMaxClaimable;
     }
