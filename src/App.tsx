@@ -1,5 +1,6 @@
 import {
   ConnectWallet,
+  detectContractFeature,
   useActiveClaimConditionForWallet,
   useAddress,
   useClaimConditions,
@@ -19,10 +20,12 @@ import { PoweredBy } from "./components/PoweredBy";
 import { useToast } from "./components/ui/use-toast";
 import { parseIneligibility } from "./utils/parseIneligibility";
 import {
+  clientIdConst,
   contractConst,
   primaryColorConst,
   themeConst,
 } from "./consts/parameters";
+import { ContractWrapper } from "@thirdweb-dev/sdk/dist/declarations/src/evm/core/classes/contract-wrapper";
 import penguinsHeader from "./penguins.gif"
 import scrollHeader from "./scroll.png"
 
@@ -99,6 +102,21 @@ export default function Home() {
     quantity,
   ]);
 
+  const isOpenEdition = useMemo(() => {
+    if (contractQuery?.contract) {
+      const contractWrapper = (contractQuery.contract as any)
+        .contractWrapper as ContractWrapper<any>;
+
+      const featureDetected = detectContractFeature(
+        contractWrapper,
+        "ERC721SharedMetadata",
+      );
+
+      return featureDetected;
+    }
+    return false;
+  }, [contractQuery.contract]);
+
   const maxClaimable = useMemo(() => {
     let bnMaxClaimable;
     try {
@@ -140,8 +158,7 @@ export default function Home() {
     const maxAvailable = BigNumber.from(unclaimedSupply.data || 0);
 
     let max;
-    if (maxAvailable.lt(bnMaxClaimable)) {
-      max = maxAvailable;
+    if (maxAvailable.lt(bnMaxClaimable) && !isOpenEdition) {
     } else {
       max = bnMaxClaimable;
     }
@@ -164,7 +181,7 @@ export default function Home() {
           BigNumber.from(activeClaimCondition.data?.availableSupply || 0).lte(
             0,
           )) ||
-        numberClaimed === numberTotal
+          (numberClaimed === numberTotal && !isOpenEdition)
       );
     } catch (e) {
       return false;
@@ -174,6 +191,7 @@ export default function Home() {
     activeClaimCondition.isSuccess,
     numberClaimed,
     numberTotal,
+    isOpenEdition,
   ]);
 
   const canClaim = useMemo(() => {
@@ -211,7 +229,7 @@ export default function Home() {
 
   const buttonText = useMemo(() => {
     if (isSoldOut) {
-      
+      return "Sold Out";
     }
 
     if (canClaim) {
@@ -416,7 +434,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+      <PoweredBy />
     </div>
   );
 }
