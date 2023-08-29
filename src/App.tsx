@@ -230,7 +230,7 @@ export default function Home() {
 
   const buttonText = useMemo(() => {
     if (isSoldOut) {
-      return "Sold Out";
+
     }
 
     if (canClaim) {
