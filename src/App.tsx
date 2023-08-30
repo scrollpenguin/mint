@@ -313,7 +313,7 @@ export default function Home() {
         
               
               <h1 style={{background: "white", color: "black", borderWidth: "thick"}} className="line-clamp-1 text-2xl font-bold xs:text-3xl lg:text-4xl">
-               &nbsp;&nbsp;&nbsp;&nbsp; SCROLL PENGUINS
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SCROLL PENGUINS
                 
               </h1>
          
