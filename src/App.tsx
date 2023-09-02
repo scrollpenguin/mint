@@ -316,6 +316,13 @@ export default function Home() {
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SCROLL PENGUINS
                 
               </h1>
+
+               <h3 style={{background: "white", color: "#00008B", borderWidth: "thick"}} className="line-clamp-1 text-2xl font-bold xs:text-3xl lg:text-4xl">
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               <a style={{color: "#00008B"}} href="https://www.testnet.zkmarkets.com/scroll-testnet/collections/0x37213bb59eed00f9b0f8689fda7462050a502113">
+               Buy On Zk Markets
+               </a>
+              </h3>
          
             </div>
             <div className="flex w-full gap-4">
